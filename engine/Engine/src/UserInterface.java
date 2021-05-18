@@ -27,21 +27,61 @@ public class UserInterface extends JPanel implements MouseInputListener
 
 
 
-
-
-    /*  Image king= new ImageIcon("king.jpg").getImage();
-      Image bking= new ImageIcon("bking.jpg").getImage();
-      Image queen= new ImageIcon("queen.jpg").getImage();
-      Image bqueen= new ImageIcon("bqueen.jpg").getImage();
-      Image bishop= new ImageIcon("bishop.jpg").getImage();
-      Image bbishop= new ImageIcon("bbishop.jpg").getImage();
-      Image knight= new ImageIcon("knight.jpg").getImage();
-      Image bknight= new ImageIcon("bknight.jpg").getImage();
-      Image pawn= new ImageIcon("pawn.jpg").getImage();
-      Image bpawn= new ImageIcon("bpawn.jpg").getImage();
-      Image rook= new ImageIcon("rook.jpg").getImage();
-      Image brook= new ImageIcon("brook.jpg").getImage();
-        */
+            //import all the images of the pieces
+     Image king= new ImageIcon("king.png").getImage();
+      Image bking= new ImageIcon("bking.png").getImage();
+      Image queen= new ImageIcon("queen.png").getImage();
+      Image bqueen= new ImageIcon("bqueen.png").getImage();
+      Image bishop= new ImageIcon("bishop.png").getImage();
+      Image bbishop= new ImageIcon("bbishop.png").getImage();
+      Image knight= new ImageIcon("knight.png").getImage();
+      Image bknight= new ImageIcon("bknight.png").getImage();
+      Image pawn= new ImageIcon("pawn.png").getImage();
+      Image bpawn= new ImageIcon("bpawn.png").getImage();
+      Image rook= new ImageIcon("rook.png").getImage();
+      Image brook= new ImageIcon("brook.png").getImage();
+        for (int i=0; i<64; i++) //place the pieces on the boarc
+        {
+            switch(App.board[i/8][i%8])
+            {
+                case 'K': 
+                g.drawImage(king, (i%8)*tileSize, (i/8)*tileSize,(i%8+1)*tileSize ,(i/8+1)*tileSize,x,y,y,y, this); //FIX THE WAY IT LOOKS
+                break;
+            /*case 'k':
+                g.drawImage(bking, x, y, this);
+                break;
+            case 'N':
+                g.drawImage(knight, x, y, this);
+                break;
+            case 'n':
+                g.drawImage(bknight, x, y, this);
+                break;
+            case 'p':
+                g.drawImage(bpawn, x, y, this);
+                break;
+            case 'P':
+                g.drawImage(pawn, x, y, this);
+                break;
+            case 'Q':
+                g.drawImage(queen, x, y, this);
+                break;
+            case 'q':
+                g.drawImage(bqueen, x, y, this);
+                break;
+            case 'r':
+                g.drawImage(brook, x, y, this);
+                break;
+            case 'R':
+                g.drawImage(rook, x, y, this);
+                break;
+            case 'B':
+                g.drawImage(bishop, x, y, this);
+                break;
+            case 'b':
+                g.drawImage(bbishop, x, y, this);
+                break;   */
+            }
+        }
     }
     
    
