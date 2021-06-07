@@ -8,7 +8,7 @@ public class App {
     {
         {'r','n','b','q','k','b','n','r'},
         {'p','p','p','p','p','p','p','p'},
-        {' ',' ',' ','B',' ',' ',' ',' '},
+        {' ',' ',' ',' ',' ',' ',' ',' '},
         {' ',' ',' ',' ',' ',' ',' ',' '},
         {' ',' ',' ',' ',' ',' ',' ',' '},
         {' ',' ',' ',' ',' ',' ',' ',' '},
@@ -75,7 +75,7 @@ public class App {
                     {
                         oldPiece=board[rank+temp*y][file+temp*x]; //
                         board[rank][file]= ' ';
-                        board[rank+temp*y][file+temp*x]='B'; //place rook at the OldPiece location
+                        board[rank+temp*y][file+temp*x]='B'; //place bishop at the OldPiece location
                         if (kingSafe())
                         {
                             legalMove=legalMove+rank+file+(rank+temp*y)+(file+temp*x)+oldPiece;
@@ -88,7 +88,7 @@ public class App {
                     {
                         oldPiece=board[rank+temp*y][file+temp*x]; //
                         board[rank][file]= ' ';
-                        board[rank+temp*y][file+temp*x]='B'; //place queen at the OldPiece location
+                        board[rank+temp*y][file+temp*x]='B'; //place bishop at the OldPiece location
                         if (kingSafe())
                         {
                             legalMove=legalMove+rank+file+(rank+temp*y)+(file+temp*x)+oldPiece;
@@ -97,7 +97,7 @@ public class App {
                         board[rank+temp*y][file+temp*x]=oldPiece;
                     }
                 } catch (Exception e) { }
-                temp=1; //need to reset temp so queen goes back to original square
+                temp=1; //need to reset temp so bishop goes back to original square
         }
     }
     return legalMove;
@@ -108,6 +108,42 @@ public class App {
         String legalMove="";
         char oldPiece=' ';
         int rank= (i/8), file= (i%8);
+
+        for (int x=-1; x<=1; x+=2)
+        {
+            for (int y=-1; y<=1; y+=1)
+            {
+                try {
+                    if (Character.isLowerCase(board[rank+y][file+x*2]) || ' '==board[rank+y][file+x*2]) //check the square is empty of capturable
+                    {
+                        oldPiece=board[rank+y][file+x*2]; //
+                        board[rank][file]= ' ';
+                        if (kingSafe())
+                        {
+                            legalMove=legalMove+rank+file+(rank+y)+(file+x*2)+oldPiece;
+                        }
+                        board[rank][file]='N';
+                        board[rank+y][file+x*2]=oldPiece;
+                    }
+                } catch (Exception e) { }
+               
+                try {   
+                    if (Character.isLowerCase(board[rank+y*2][file+x]) || ' '==board[rank+y*2][file+x])
+                    {
+                        oldPiece=board[rank+y*2][file+x]; //
+                        board[rank][file]= ' ';
+                        if (kingSafe())
+                        {
+                            legalMove=legalMove+rank+file+(rank+y*2)+(file+x)+oldPiece;
+                        }
+                        board[rank][file]='N';
+                        board[rank+y*2][file+x]=oldPiece;
+                    }
+                } catch (Exception e) { }
+            }
+        }
+    
+         
         return legalMove;
     }
     public static String generateLegalKing (int i) //add castling later
@@ -211,7 +247,70 @@ public class App {
         String legalMove="";
         char oldPiece=' ';
         int rank= (i/8), file= (i%8);
+        int temp=1; //variable used to go check each square in while loop
+
+        for(int x=-1; x<=1; x+=2) //go either in positive or negative direction 
+        {
+            try {
+                while(' '==board[rank+temp*x][file] ) //go out in all directions and check if it is an empty square //scannign through rows
+                {
+                    oldPiece=board[rank+temp*x][file]; //
+                    board[rank][file]= ' ';
+                    board[rank+temp*x][file]='R'; //place rook at the OldPiece location
+                    if (kingSafe())
+                    {
+                        legalMove=legalMove+rank+file+(rank+temp*x)+file+oldPiece;
+                    }
+                    board[rank][file]='R';
+                    board[rank+temp*x][file]=oldPiece;
+                    temp++;// increment temp so it can go through each possible square
+                }
+                if (Character.isLowerCase(board[rank+temp*x][file])) //check the square if there are any captures
+                {
+                    oldPiece=board[rank+temp*x][file]; //
+                    board[rank][file]= ' ';
+                    board[rank+temp*x][file]='R'; //place rook at the OldPiece location
+                    if (kingSafe())
+                    {
+                        legalMove=legalMove+rank+file+(rank+temp*x)+file+oldPiece;
+                    }
+                    board[rank][file]='R';
+                    board[rank+temp*x][file]=oldPiece;
+                }
+            } catch (Exception e) { }
+            temp=1; //need to reset temp so queen goes back to original square
+            try {
+                while(' '==board[rank][file+temp*x] ) //go out in all directions and check if it is an empty square
+                {
+                    oldPiece=board[rank][file+temp*x]; //
+                    board[rank][file]= ' ';
+                    board[rank][file+temp*x]='R'; //place rook at the OldPiece location
+                    if (kingSafe())
+                    {
+                        legalMove=legalMove+rank+file+(rank)+(file+temp*x)+oldPiece;
+                    }
+                    board[rank][file]='R';
+                    board[rank][file+temp*x]=oldPiece;
+                    temp++;// increment temp so it can go through each possible square
+                }
+                if (Character.isLowerCase(board[rank][file+temp*x])) //check the square if there are any captures
+                {
+                    oldPiece=board[rank][file+temp*x]; //
+                    board[rank][file]= ' ';
+                    board[rank][file+temp*x]='R'; //place rook at the OldPiece location
+                    if (kingSafe())
+                    {
+                        legalMove=legalMove+rank+file+(rank)+(file+temp*x)+oldPiece;
+                    }
+                    board[rank][file]='R';
+                    board[rank][file+temp*x]=oldPiece;
+                }
+            } catch (Exception e) { }
+            temp=1; //need to reset temp so queen goes back to original square 
+        }
+
         return legalMove;
+       
     }
     public static boolean kingSafe()
     {
