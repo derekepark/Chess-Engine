@@ -240,6 +240,112 @@ public class App {
         String legalMove="";
         char oldPiece=' ';
         int rank= (i/8), file= (i%8);
+        for (int x=-1; x<=1; x+=2)
+        {
+            try{ 
+                if (Character.isLowerCase(board[rank-1][file+x]) && (i>=16) ) //capture
+                {
+                    oldPiece=board[rank-1][file+x]; //
+                    board[rank][file]= ' ';
+                    board[rank-1][file+x]='P'; //place queen at the OldPiece location
+                    if (kingSafe())
+                    {
+                        legalMove=legalMove+rank+file+(rank-1)+(file+x)+oldPiece;
+                    }
+                    board[rank][file]='P';
+                    board[rank-1][file+x]=oldPiece;
+                }
+
+
+            }
+            catch (Exception e)
+            {}
+            try{ 
+                if (Character.isLowerCase(board[rank-1][file+x]) && (i<=16) ) //capture and promotion
+                {
+                    char[] temp={'Q', 'R', 'B', 'N',}; //possible promotion pieces
+                    for (int j=0; j<4; j++) //iterate through all possible promotion pieces and list the move for each piece
+                    {
+                        oldPiece=board[rank-1][file+x]; //
+                    board[rank][file]= ' ';
+                    board[rank-1][file+x]= temp[j]; //puts the promotion piece at the new location
+                    if (kingSafe())
+                    {
+
+                        legalMove=legalMove+file+(file+x)+oldPiece+temp[j]+'P'; //added temp[i] to know what it promoted too
+                    }
+                    board[rank][file]='P';
+                    board[rank-1][file+x]=oldPiece;
+                    }
+                }
+
+
+            }
+            catch (Exception e)
+            {}
+        }
+            try{ //promotion no capture
+                if (' '== board[rank-1][file] && i<16) //capture and promotion
+                {
+
+                    char[] temp={'Q', 'R', 'B', 'N'};//possible promotion pieces
+                    for (int j=0; j<4; j++) //iterate through all possible promotion pieces and list the move for each piece
+                    {
+                        oldPiece=board[rank-1][file]; //
+                    board[rank][file]= ' ';
+                    board[rank-1][file]= temp[j]; //puts the promotion piece at the new location
+                    if (kingSafe())
+                    {
+
+                        legalMove=legalMove+file+(file)+oldPiece+temp[j]+'P'; //added temp[i] to know what it promoted too
+                    }
+                    board[rank][file]='P';
+                    board[rank-1][file]=oldPiece;
+                    }
+                }
+            }
+            catch (Exception e)
+            {}
+            try{ //moving up once
+                if (' '== board[rank-1][file] && i>=16)
+                {
+
+                    oldPiece=board[rank-1][file]; //
+                    board[rank][file]= ' ';
+                    board[rank-1][file]= 'P'; 
+                    if (kingSafe())
+                    {
+
+                        legalMove=legalMove+rank+file+(rank-1)+(file)+oldPiece;
+                 
+                    }
+                    board[rank][file]='P';
+                    board[rank-1][file]=oldPiece;
+                }
+
+
+            }
+            catch (Exception e)
+            {}
+            try{ //move up 2
+                if (' '== board[rank-1][file] && ' '==board[rank-2][file] && i>=48) //if pawn is on first rank and can move up 2 places
+                {
+
+        
+                     oldPiece=board[rank-2][file]; 
+                    board[rank][file]= ' ';
+                    board[rank-2][file]= 'P'; 
+                    if (kingSafe())
+                    {
+
+                        legalMove=legalMove+rank+file+(rank-2)+(file)+oldPiece; 
+                    }
+                    board[rank][file]='P';
+                    board[rank-2][file]=oldPiece;
+                    }
+                }
+            catch (Exception e)
+            {}
         return legalMove;
     }
     public static String generateLegalRook (int i)
