@@ -420,6 +420,50 @@ public class App {
     }
     public static boolean kingSafe()
     {
+        int temp=1;
+        for (int x=-1; x<=1; x+=2)
+        {
+            for (int y=-1;y<=1; y+=2)
+            {
+                try {
+                     while (' '==board[king/8+temp*x][king%8+temp*y])
+                     {
+                         temp++;
+                     }
+                     if ('b'==board[king/8+temp*x][king%8+temp*y] || 'q'==board[king/8+temp*x][king%8+temp*y]) //check for bishop and queen pin
+                     {
+                         return false;
+                     }
+                } catch (Exception e) { }
+            }
+        } 
+
+        for (int i=-1; i<=1; i+=2)
+        {
+            try {
+                while (' '==board[king/8][king%8+temp*i])
+                {
+                    temp++;
+                }
+                if ('r'==board[king/8][king%8+temp*i] || 'q'== board[king/8][king%8+temp*i]) //queen and rook pin
+                {
+                    return false;
+                }
+
+            } catch (Exception e) {}
+            temp=1;
+        }
+        try {
+            while (' '== board [king/8+temp*1][king%8])
+            {
+                temp++;
+            }
+            if ('r'==board[king/8+temp*1][king%8] || 'q'== board[king/8+temp*1][king%8])  
+            {
+                return false;
+            }
+        } catch (Exception e) {}
+       
         return true;
     }
  
