@@ -25,6 +25,14 @@ public class App {
         UI.setSize(528, 550); 
         UI.setVisible(true);
         System.out.println(generateAllLegal());
+        while ('K'!=board[king/8][king%8])
+        {
+            king++;
+        }
+        while ('k'!=board[bking/8][bking%8])
+        {
+            bking++;
+        }
 
     }
     //get location of array by [i/8][i%8]
@@ -452,7 +460,7 @@ public class App {
 
             } catch (Exception e) {}
             temp=1;
-        }
+    
         try {
             while (' '== board [king/8+temp*1][king%8])
             {
@@ -463,7 +471,66 @@ public class App {
                 return false;
             }
         } catch (Exception e) {}
-       
+        temp=1;
+    }
+
+        for (int i=-1; i<=1; i+=2) //knight
+        {
+            for (int j=-1; j<=1; j+=2)
+            {
+                try {
+                    if('k'==board[king/8+i][king%8+j*2])
+                    {
+                        return false;
+                    }
+                } catch (Exception e)
+                {}
+                try {
+                    if('k'==board[king/8+i*2][king%8+j])
+                    {
+                        return false;
+                    }
+                } catch (Exception e)
+                {}
+                
+            }
+        }
+
+        if (king>=16)
+        {
+          try {
+              if('p'==board[king/8-1][king%8-1])
+              {
+                  return false;
+              }
+          } catch (Exception e) {
+          }      
+          try {
+              if('p'== board[king/8-1][king%8+1])
+              {
+                  return false;
+              }
+          } catch (Exception e) {
+          }
+        }
+        
+        for (int i=-1; i<=1; i++)
+        {
+            for (int j=-1; j<=1; j++)
+            {
+                if (i!=0 ||j!=0 )
+                {
+                    try {
+                        if ('a'==board[king/8+i][king%8+j])
+                        {
+                            return false;
+                        }
+                    } catch (Exception e) {
+                    
+                    }
+                }
+            }
+        }
         return true;
     }
  
