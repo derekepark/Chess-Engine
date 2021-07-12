@@ -35,6 +35,35 @@ public class App {
         }
 
     }
+
+    public static void makeMove(String move) //format for move x1,y1,x2,y2,captured piece //basically a swap 
+    {
+        if (move.charAt(4)!='P') //check if it is a pawn promotion move
+        {
+            board[Character.getNumericValue(move.charAt(2))][Character.getNumericValue(move.charAt(3))]=board[Character.getNumericValue(move.charAt(0))][Character.getNumericValue(move.charAt(1))];
+            board[Character.getNumericValue(move.charAt(0))][Character.getNumericValue(move.charAt(1))]=' ';
+
+        }
+        else //if it is a pawn promotion
+        {
+            board[1][Character.getNumericValue(move.charAt(0))] =' ';
+            board[0][Character.getNumericValue(move.charAt(1))]=String.valueOf(move.charAt(3));
+        }
+    }
+    public static void undoMove (String move)
+    {
+        if (move.charAt(4)!='P') //check if it is a pawn promotion move
+        {
+            board[Character.getNumericValue(move.charAt(0))][Character.getNumericValue(move.charAt(1))]=board[Character.getNumericValue(move.charAt(2))][Character.getNumericValue(move.charAt(3))];
+            board[Character.getNumericValue(move.charAt(2))][Character.getNumericValue(move.charAt(3))]=' ';
+
+        }
+        else //if it is a pawn promotion
+        {
+            board[1][Character.getNumericValue(move.charAt(0))] ='P';
+            board[0][Character.getNumericValue(move.charAt(1))]=String.valueOf(move.charAt(2));
+        }
+    }
     //get location of array by [i/8][i%8]
     public static String generateAllLegal()
     {
